@@ -1,0 +1,62 @@
+<html ng-app="ContactApp">
+
+<head>
+    <title>My Contact App</title>
+    <script src="angular.js"></script>
+    <script src="app.js"></script>
+    <script src="appConfig.service.js"></script>
+    <script src="appname.service.js"></script>
+    <script src="contact.controller.js"></script>
+    <script src="contactdata.service.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>My Contact App</h1>
+    <div class="container" ng-controller="ContactCtrl as ctrl">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li ng-click="ctrl.selectContact($index)" class="list-group-item" ng-repeat="contact in ctrl.contacts">
+                        <span>{{contact.name.first + " " +contact.name.last}}</span>
+                    </li>
+                </ul>
+                <button ng-click="ctrl.addContact()">Add</button>
+            </div>
+            <div class="col-md-6" ng-show="ctrl.selectedContact">
+                <div class="alert alert-success" ng-if="ctrl.successMessage">{{ctrl.successMessage}}</div>
+                <div class="alert alert-dangerj" ng-if="ctrl.errorMessage">{{ctrl.errorMessage}}</div>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img ng-src="{{ctrl.selectedContact.picture.medium}}"></img>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <button ng-hide="ctrl.editMode" ng-click="ctrl.toggleEditMode()">Edit</button>
+                        <button ng-show="ctrl.editMode" ng-click="ctrl.saveUser()">Save</button>
+                        <h4 ng-hide="ctrl.editMode" class="media-heading">
+                            {{ctrl.selectedContact.name.first +" " +ctrl.selectedContact.name.last}}
+                        </h4>
+                        <div ng-show="ctrl.editMode">
+                            <p>First Name:<input type="text" ng-model="ctrl.selectedContact.name.first"></input></p>
+                            <p>Last Name:<input type="text" ng-model="ctrl.selectedContact.name.last"></input></p>
+                        </div>
+                        <div>
+                            <p>Cell No:</p>
+                            <p ng-hide="ctrl.editMode">{{ctrl.selectedContact.cell}}</p>
+                            <input type="text" ng-model="ctrl.selectedContact.cell" ng-show="ctrl.editMode"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
